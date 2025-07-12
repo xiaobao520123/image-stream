@@ -14,7 +14,7 @@ image-stream:
       delivery:
         registry: "docker.io"
         tag: "ckserver-latest"
-    - name: "debian"
+    - name: "ubuntu"
       source: "image"
       image:
         registry: "docker.io"
