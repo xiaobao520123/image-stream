@@ -1,0 +1,54 @@
+image-stream:
+  # registry: "docker.io"
+  repository: "lovely-docker-hub-account/image-stream"
+  platform: "linux/amd64"
+  images:
+    - name: "clickhouse"
+      source: "image"
+      image:
+        registry: "docker.io"
+        repository: "clickhouse/clickhouse-server"
+        platform: "linux/amd64"
+        tag: "latest"
+        digest: ""
+      delivery:
+        registry: "docker.io"
+        tag: "ckserver-latest"
+    - name: "debian"
+      source: "image"
+      image:
+        registry: "docker.io"
+        repository: "ubuntu"
+        digest: "sha256:8feb4d8ca5354def3d8fce243717141ce31e2c428701f6682bd2fafe15388214"
+      delivery:
+        registry: "docker.io"
+        tag: "ubuntu-latest"
+        platform: "linux/arm64"
+    - name: "ingress-nginx"
+      source: "helm"
+      helm:
+        repository: "https://kubernetes.github.io/ingress-nginx"
+        chart: "ingress-nginx"
+        version: "4.12.4"
+        image:
+          registry: "global.image.registry"
+          repository: "controller.image.image"
+          tag: "controller.image.tag"
+          # digest: "controller.image.digest"
+          platform: ""
+      delivery:
+        tag: "ingress-nginx-latest"
+    - name: "zookeeper"
+      source: "helm"
+      helm:
+        repository: "https://charts.bitnami.com/bitnami"
+        chart: "zookeeper"
+        image:
+          # registry: "image.registry"
+          repository: "image.repository"
+          tag: "image.tag"
+          digest: "image.digest"
+      delivery:
+        registry: "docker.io"
+        repository: "lovely-docker-hub-account/image-stream2"
+        tag: "zookeeper-latest"

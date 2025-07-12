@@ -15,8 +15,6 @@ def main():
     )
     args = parser.parse_args()
 
-    print(args.configuration)
-
     task_config = load_config(args.configuration)
     tasks = build_tasks(task_config)
     deliver(tasks)
@@ -34,6 +32,8 @@ def load_config(file_path):
 
     GlobalConfig.registry = config.get("registry", None)
     GlobalConfig.repository = config.get("repository", None)
+    GlobalConfig.platform = config.get("platform", None)
+    GlobalConfig.print()
     return config.get("images", [])
 
 
@@ -47,14 +47,28 @@ def build_tasks(task_configs):
         if source_type == Source.image:
             source = task.get("image")
             source = Image(
-                registry=source.get("registry", GlobalConfig.registry),
-                repository=source.get("repository", GlobalConfig.repository),
+                registry=source.get("registry"),
+                repository=source.get("repository"),
                 tag=source.get("tag"),
                 digest=source.get("digest", None),
                 platform=source.get("platform", None),
             )
         elif source_type == Source.helm:
-            raise NotImplementedError("Helm source is not implemented yet.")
+            helm = task.get("helm")
+            image_config = helm.get("image")
+            image_config = HelmChartImageConfig(
+                registry=image_config.get("registry"),
+                repository=image_config.get("repository"),
+                tag=image_config.get("tag"),
+                digest=image_config.get("digest", None),
+                platform=image_config.get("platform", None),
+            )
+            source = HelmChart(
+                repository=helm.get("repository"),
+                chart=helm.get("chart"),
+                image_config=image_config,
+                version=helm.get("version"),
+            )
         else:
             raise ValueError(f"Invalid source: {source_type}")
 
@@ -66,6 +80,7 @@ def build_tasks(task_configs):
             registry=delivery.get("registry", GlobalConfig.registry),
             repository=delivery.get("repository", GlobalConfig.repository),
             tag=delivery.get("tag"),
+            platform=delivery.get("platform", GlobalConfig.platform),
         )
 
         task = Task(
@@ -80,7 +95,7 @@ def build_tasks(task_configs):
 
 def deliver(tasks):
     for task in tasks:
-        print(f"Delivering task: {task.name}")
+        print(f"Start streaming task: {task.name}")
         task.deliver()
         print("")
 
