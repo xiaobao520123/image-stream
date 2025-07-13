@@ -10,6 +10,8 @@ image-stream:
         platform: "linux/amd64"
         tag: "latest"
       delivery:
+        registry: "docker.io"
+        repository: "xiaobaomy123/image-stream"
         tag: "clickhouse-server-latest"
     - name: "ingress-nginx"
       source: "helm"
@@ -22,17 +24,36 @@ image-stream:
           repository: "controller.image.image"
           tag: "controller.image.tag"
       delivery:
+        registry: "docker.io"
+        repository: "xiaobaomy123/image-stream"
         tag: "ingress-nginx-latest"
     - name: "zookeeper"
       source: "helm"
       helm:
         repository: "https://charts.bitnami.com/bitnami"
         chart: "zookeeper"
+        # version: "13.8.4"
         image:
           # registry: "image.registry"
           repository: "image.repository"
           tag: "image.tag"
           digest: "image.digest"
       delivery:
+        registry: "docker.io"
         repository: "xiaobaomy123/image-stream"
         tag: "zookeeper-latest"
+    - name: "mysql"
+      source: "helm"
+      helm:
+        repository: "https://charts.bitnami.com/bitnami"
+        chart: "mysql"
+        # version: "13.0.3"
+        image:
+          registry: "image.registry"
+          repository: "image.repository"
+          tag: "image.tag"
+          digest: "image.digest"
+      delivery:
+        registry: "docker.io"
+        repository: "xiaobaomy123/image-stream"
+        tag: "mysql-latest"
