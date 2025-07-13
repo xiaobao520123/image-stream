@@ -47,7 +47,7 @@ image-stream:
         # Image digest (Optional)
         digest: "sha256:8feb4d8ca5354def3d8fce243717141ce31e2c428701f6682bd2fafe15388214"
         
-        # Image platform (Optional). If unset, use GlobalConfig.platfrom to ensure compatibility.
+        # Image platform (Optional). If unset, use GlobalConfig.platform to ensure compatibility.
         platform: "linux/arm64"
       delivery:
         registry: "docker.io"   # New image registry (Optional)
