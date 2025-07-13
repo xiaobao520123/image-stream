@@ -1,0 +1,37 @@
+image-stream:
+  registry: "docker.io"
+  repository: "xiaobaomy123/image-stream"
+  platform: "linux/amd64"
+  images:
+    - name: "clickhouse"
+      source: "image"
+      image:
+        repository: "clickhouse/clickhouse-server"
+        tag: "latest"
+      delivery:
+        tag: "clickhouse-server-latest"
+    - name: "ingress-nginx"
+      source: "helm"
+      helm:
+        repository: "https://kubernetes.github.io/ingress-nginx"
+        chart: "ingress-nginx"
+        version: "4.12.4"
+        image:
+          registry: "global.image.registry"
+          repository: "controller.image.image"
+          tag: "controller.image.tag"
+      delivery:
+        tag: "ingress-nginx-latest"
+    - name: "zookeeper"
+      source: "helm"
+      helm:
+        repository: "https://charts.bitnami.com/bitnami"
+        chart: "zookeeper"
+        image:
+          # registry: "image.registry"
+          repository: "image.repository"
+          tag: "image.tag"
+          digest: "image.digest"
+      delivery:
+        repository: "xiaobaomy123/image-stream"
+        tag: "zookeeper-latest"
