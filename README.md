@@ -47,7 +47,7 @@ image-stream:
         # Image digest (Optional)
         digest: "sha256:8feb4d8ca5354def3d8fce243717141ce31e2c428701f6682bd2fafe15388214"
         
-        # Image platform (Optional)
+        # Image platform (Optional). If unset, use GlobalConfig.platfrom to ensure compatibility.
         platform: "linux/arm64"
       delivery:
         registry: "docker.io"   # New image registry (Optional)
@@ -84,7 +84,7 @@ image-stream:
           tag: "controller.image.tag"
           # Path to digest setting of source image (Optional)
           digest: "controller.image.digest"
-          # Path to platform of source image (Optional)
+          # Path to platform of source image (Optional). If unset, use GlobalConfig.platform to ensure compatibility.
           platform: ""
       delivery:
         registry: "docker.io"   # New image registry (Optional)

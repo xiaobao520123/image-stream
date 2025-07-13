@@ -51,7 +51,7 @@ def build_tasks(task_configs):
                 repository=source.get("repository"),
                 tag=source.get("tag"),
                 digest=source.get("digest", None),
-                platform=source.get("platform", None),
+                platform=source.get("platform", GlobalConfig.platform),
             )
         elif source_type == Source.helm:
             helm = task.get("helm")
